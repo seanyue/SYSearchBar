@@ -1,0 +1,22 @@
+{
+  "name": "SYSearchBar",
+  "version": "0.1.0",
+  "summary": "A short description of SYSearchBar.",
+  "description": "SYSearchBar description",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/SYSearchBar",
+  "license": "MIT",
+  "authors": {
+    "Yu Xulu": "tonyfish@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/SYSearchBar.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resources": "Pod/Assets/**/*",
+  "public_header_files": "Pod/Classes/**/*.h"
+}

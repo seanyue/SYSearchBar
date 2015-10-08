@@ -1,0 +1,15 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'SYSearchBar_Example', :exclusive => true do
+  pod "SYSearchBar", :path => "../"
+end
+
+target 'SYSearchBar_Tests', :exclusive => true do
+  pod "SYSearchBar", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+  pod 'FBSnapshotTestCase'
+  pod 'Expecta+Snapshots'
+end

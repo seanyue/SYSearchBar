@@ -1,0 +1,6 @@
+framework module SYSearchBar {
+  umbrella header "SYSearchBar-umbrella.h"
+
+  export *
+  module * { export * }
+}
