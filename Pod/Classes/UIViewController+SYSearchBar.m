@@ -8,10 +8,10 @@
 
 #import "UIViewController+SYSearchBar.h"
 #import "UIImage+SYSearchBarExtensions.h"
-#import "SYSearchButton.h"
 #import <objc/runtime.h>
 
 static void *kSearchButtonAssociatedKey = &kSearchButtonAssociatedKey;
+static void *kSearchInputBarAssociatedKey = &kSearchInputBarAssociatedKey;
 static void *kSearchResultsViewControllerAssociatedKey = &kSearchResultsViewControllerAssociatedKey;
 
 static const CGFloat kSearchButtonSize = 49.;
@@ -55,6 +55,14 @@ static const CGFloat kSearchButtonSize = 49.;
     [self syShowSearchController];
 }
 
+- (void)sySearchButtonDidAnimateToTopbar {
+    if (![self.view.subviews containsObject:self.sySearchInputBar]) {
+        [self.view addSubview:self.sySearchInputBar];
+    }
+    
+    [self.sySearchInputBar.inputTextField becomeFirstResponder];
+}
+
 #pragma mark - Setters/Getters of Properties
 
 - (SYSearchButton *)sySearchButton {
@@ -64,14 +72,29 @@ static const CGFloat kSearchButtonSize = 49.;
     }
     
     SYSearchButton *searchButton = [[SYSearchButton alloc] init];
+    searchButton.delegate = self;
     objc_setAssociatedObject(self, kSearchButtonAssociatedKey, searchButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    return searchButton;
+}
+
+- (SYSearchInputBar *)sySearchInputBar {
+    SYSearchInputBar *searchInputBar = objc_getAssociatedObject(self, kSearchInputBarAssociatedKey);
+    if (searchInputBar) {
+        return searchInputBar;
+    }
+    
+    searchInputBar = [[SYSearchInputBar alloc] initFromSearchButton:self.sySearchButton];
+    searchInputBar.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kSearchButtonSize);
+    objc_setAssociatedObject(self, kSearchInputBarAssociatedKey, searchInputBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     __weak typeof(self) weakSelf = self;
-    searchButton.action = ^(SYSearchButton *button) {
-        [weakSelf syBeginSearch];
+    searchInputBar.cancelAction = ^(id sender){
+        [weakSelf.sySearchInputBar removeFromSuperview];
+        [weakSelf.sySearchButton animateToPreviousPosition];
     };
     
-    return searchButton;
+    return searchInputBar;
 }
 
 - (UIViewController *)sySearchResultsViewController {

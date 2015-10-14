@@ -9,15 +9,20 @@
 #import <UIKit/UIKit.h>
 
 @class SYSearchButton;
-typedef void (^SYSearchButtonAction)(SYSearchButton *button);
+
+@protocol SYSearchButtonDelegate <NSObject>
+
+- (void)sySearchButtonDidAnimateToTopbar;
+
+@end
 
 @interface SYSearchButton : UIButton
 
 @property (nonatomic) NSString *placeholder;
 
 @property (nonatomic) BOOL expanded;
-@property (nonatomic,copy) SYSearchButtonAction action;
+@property (nonatomic,assign) id<SYSearchButtonDelegate> delegate;
 
-- (void)animateToTopBarWithCompletion:(void (^)(void))completion;
+- (void)animateToPreviousPosition;
 
 @end

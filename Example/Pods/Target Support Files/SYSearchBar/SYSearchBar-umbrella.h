@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 #import "SYSearchButton.h"
-#import "UIImage+SYSearchBarExtensions.h"
+#import "SYSearchInputBar.h"
 #import "UIViewController+SYSearchBar.h"
 
 FOUNDATION_EXPORT double SYSearchBarVersionNumber;

@@ -1,1 +1,1 @@
-../../../../../Pod/Classes/UIImage+SYSearchBarExtensions.h
+../../../../../Pod/Classes/Private/UIImage+SYSearchBarExtensions.h

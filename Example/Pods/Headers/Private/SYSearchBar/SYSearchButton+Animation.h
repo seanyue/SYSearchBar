@@ -1,0 +1,1 @@
+../../../../../Pod/Classes/Private/SYSearchButton+Animation.h

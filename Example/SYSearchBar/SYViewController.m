@@ -32,10 +32,10 @@ static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusabl
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTableViewCellReusableIdentifier];
     [self.view addSubview:_tableView];
     
-    [self syAddSearchBarInPosition:CGPointMake(10, 50)];
+    [self syAddSearchBarInPosition:CGPointMake(20, 30)];
     self.sySearchButton.placeholder = @"搜索";
     self.sySearchResultsViewController = [[SYSearchResultsViewController alloc] init];
-    
+    self.sySearchButton.expanded = YES;
 }
 
 - (void)didReceiveMemoryWarning
