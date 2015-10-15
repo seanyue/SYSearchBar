@@ -8,6 +8,7 @@
 
 #import "SYSearchInputBar.h"
 #import "SYSearchButton+Animation.h"
+#import "UIImage+SYSearchBarExtensions.h"
 
 static const CGFloat kCancelButtonWidth = 30;
 
@@ -23,14 +24,15 @@ static const CGFloat kCancelButtonWidth = 30;
         self.backgroundColor = searchButton.backgroundColor;
         
         _inputTextField = [[UITextField alloc] init];
-        _inputTextField.font = searchButton.titleLabel.font;
+        _inputTextField.font = searchButton.placeholderLabel.font;
         _inputTextField.placeholder = searchButton.placeholder;
         [self addSubview:_inputTextField];
         
         _cancelButton = [[UIButton alloc] init];
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:14.];
         [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_cancelButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [_cancelButton setTitleColor:[UIColor colorWithWhite:0.85 alpha:1] forState:UIControlStateHighlighted];
         [_cancelButton addTarget:self action:@selector(actionCancel) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_cancelButton];
     }

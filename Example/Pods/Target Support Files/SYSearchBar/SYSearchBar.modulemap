@@ -4,6 +4,7 @@ framework module SYSearchBar {
   export *
   module * { export * }
 
+  private header "SYAnimationHelper.h"
   private header "SYSearchButton+Animation.h"
   private header "UIImage+SYSearchBarExtensions.h"
 }

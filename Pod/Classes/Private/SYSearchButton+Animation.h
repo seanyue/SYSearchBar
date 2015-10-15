@@ -12,7 +12,6 @@
 @interface SYSearchButton (Animation)
 
 @property (nonatomic) BOOL automaticallyAdjustCornerRadius;
-@property (nonatomic) BOOL inSearching;
 
 - (CGRect)boundsForButtonExpanded:(BOOL)expanded;
 - (CGFloat)cornerRadiusForButtonExpanded:(BOOL)expanded;

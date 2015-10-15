@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "80DF5807527C209A8284C0C0"
+               BlueprintIdentifier = "ED6807ABCB4791A3A6B2B5DF"
                BuildableName = "SYSearchBar.framework"
                BlueprintName = "SYSearchBar"
                ReferencedContainer = "container:Pods.xcodeproj">

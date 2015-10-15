@@ -18,6 +18,9 @@
 
 @interface SYSearchButton : UIButton
 
+@property (nonatomic,readonly,retain) UIImageView *iconImageView;
+@property (nonatomic,readonly,retain) UILabel *placeholderLabel;
+
 @property (nonatomic) NSString *placeholder;
 
 @property (nonatomic) BOOL expanded;
