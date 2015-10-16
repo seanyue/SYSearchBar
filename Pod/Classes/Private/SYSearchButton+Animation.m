@@ -75,18 +75,12 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     }
 }
 
-- (void)animatedToExpanded:(BOOL)expanded {
-    
-    NSArray<CAAnimation *> *animations =
-  @[
-    SYBasicEaseInOrOutAnimation(expanded,@"cornerRadius",nil,@([self cornerRadiusForButtonExpanded:expanded])),
-    SYBasicEaseInOrOutAnimation(expanded,@"bounds",nil,[NSValue valueWithCGRect:[self boundsForButtonExpanded:expanded]])
-    ];
-    
-    [self.layer addAnimation:[SYAnimationHelper animationGroupWithAnimations:animations delegate:self] forKey:kExpandAnimationGroupKey];
-}
-
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if (anim == [self.placeholderLabel.layer animationForKey:kTextAnimationKey]) {
+        [self.placeholderLabel.layer removeAllAnimations];
+        return ;
+    }
+    
     if (anim == [self.layer animationForKey:kExpandAnimationGroupKey]) {
         [self layerSetExpanded:self.expanded];
     } else if (anim == [self.layer animationForKey:kBeginSearchAnimationKey]) {
@@ -96,13 +90,28 @@ static const CGFloat kPlaceholderLeftOffset = 10;
         
     }
     
+    
     [self setNeedsLayout];
     [self.layer removeAllAnimations];
+}
+
+- (void)animatedToExpanded:(BOOL)expanded {
+    
+    CGRect targetSelfBounds = [self boundsForButtonExpanded:expanded];
+    
+    NSArray<CAAnimation *> *animations =
+  @[
+    SYBasicEaseInOrOutAnimation(expanded,@"cornerRadius",nil,@([self cornerRadiusForButtonExpanded:expanded])),
+    SYBasicEaseInOrOutAnimation(expanded,@"bounds",nil, CGRectValue(targetSelfBounds))
+    ];
+    
+    [self.layer addAnimation:[SYAnimationHelper animationGroupWithAnimations:animations delegate:self] forKey:kExpandAnimationGroupKey];
 }
 
 - (void)beginSearchAnimation {
     
     self.automaticallyAdjustCornerRadius = NO;
+    self.iconImageView.hidden = YES;
     
     NSArray<CAAnimation *> *animations =
   @[
@@ -114,13 +123,15 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     [self.layer addAnimation:[SYAnimationHelper animationGroupWithAnimations:animations delegate:self] forKey:kBeginSearchAnimationKey];
     
     CABasicAnimation *textAnimation = SYBasicEaseInAnimation(@"position", nil,
-                                                             [NSValue valueWithCGPoint:CGPointMake(self.placeholderLabel.layer.position.x-CGRectGetMinX(self.placeholderLabel.frame)+kPlaceholderLeftOffset, self.placeholderLabel.layer.position.y)]);
+                                                             CGPointXYValue(self.placeholderLabel.layer.position.x-CGRectGetMinX(self.placeholderLabel.frame)+kPlaceholderLeftOffset, self.placeholderLabel.layer.position.y));
+    textAnimation.delegate = self;
     [self.placeholderLabel.layer addAnimation:textAnimation forKey:kTextAnimationKey];
 
 }
 
 - (void)endSearchAnimation {
     self.hidden = NO;
+    self.iconImageView.hidden = NO;
     self.automaticallyAdjustCornerRadius = YES;
     
     NSArray<CAAnimation *> *animations =
@@ -134,6 +145,7 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     CABasicAnimation *textAnimation = SYBasicEaseOutAnimation(@"position",
                                                               CGPointXYValue(self.placeholderLabel.layer.position.x-CGRectGetMinX(self.placeholderLabel.frame)+kPlaceholderLeftOffset, self.placeholderLabel.layer.position.y),
                                                               CGPointValue(self.placeholderLabel.layer.position));
+    textAnimation.delegate = self;
     [self.placeholderLabel.layer addAnimation:textAnimation forKey:kTextAnimationKey];
 }
 

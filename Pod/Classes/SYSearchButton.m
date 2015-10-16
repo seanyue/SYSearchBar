@@ -25,6 +25,7 @@
         self.layer.masksToBounds = YES;
         self.layer.anchorPoint = CGPointMake(0, 0.5);
         self.automaticallyAdjustCornerRadius = YES;
+        self.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
         
         [self setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithWhite:0.8 alpha:1.0]] forState:UIControlStateHighlighted];
         [self addTarget:self action:@selector(actionTap) forControlEvents:UIControlEventTouchUpInside];
@@ -46,11 +47,11 @@
         self.layer.cornerRadius = [self cornerRadiusForButtonExpanded:self.expanded];
     }
     
-    self.placeholderLabel.hidden = !self.expanded;
-    
-    CGRect contentRect = CGRectInset(self.bounds, 5, 5);
+    CGRect contentRect = [self contentRectForBounds:self.bounds];
     CGFloat imageSize = MIN(contentRect.size.width, contentRect.size.height);
     _iconImageView.frame = CGRectInset(CGRectMake(contentRect.origin.x, contentRect.origin.y, imageSize, imageSize), imageSize*0.25, imageSize*0.25) ;
+    
+    self.placeholderLabel.hidden = !self.expanded;
     
     const CGFloat interspace = 5;
     _placeholderLabel.frame = CGRectMake(contentRect.origin.x+imageSize+interspace,
@@ -102,17 +103,4 @@
     
     _placeholderLabel.text = placeholder;
 }
-//- (CGRect)imageRectForContentRect:(CGRect)contentRect {
-//    CGFloat imageSize = MIN(contentRect.size.width, contentRect.size.height);
-//    return CGRectInset(CGRectMake(contentRect.origin.x, contentRect.origin.y, imageSize, imageSize), imageSize*0.25, imageSize*0.25) ;
-//}
-
-//- (CGRect)titleRectForContentRect:(CGRect)contentRect {
-//    CGFloat imageSize = MIN(contentRect.size.width, contentRect.size.height);
-//    const CGFloat interspace = 5;
-//    return CGRectMake(contentRect.origin.x+imageSize+interspace,
-//                      contentRect.origin.y,
-//                      contentRect.size.width - imageSize - interspace,
-//                      contentRect.size.height);
-//}
 @end
