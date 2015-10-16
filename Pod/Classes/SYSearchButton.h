@@ -12,8 +12,12 @@
 
 @protocol SYSearchButtonDelegate <NSObject>
 
-- (void)sySearchButtonDidAnimateToTopbar;
+@optional
+- (void)sySearchButtonWillAnimateToTopBar;
+- (void)sySearchButtonDidAnimateToTopBar;
 
+- (void)sySearchButtonWillAnimateToFloatingBar;
+- (void)sySearchButtonDidAnimateToFloatingBar;
 @end
 
 @interface SYSearchButton : UIButton

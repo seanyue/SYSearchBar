@@ -24,12 +24,26 @@
                                         toValue:(id)toValue
                                        delegate:(id)delegate;
 
++ (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath
+                             timingFunctionName:(NSString *)timingFuncName
+                                      fromValue:(id)fromValue
+                                        toValue:(id)toValue
+                                       delegate:(id)delegate
+                                       duration:(NSTimeInterval)duration;
 + (CAAnimationGroup *)animationGroupWithAnimations:(NSArray<CAAnimation *> *)animations delegate:(id)delegate;
++ (CAAnimationGroup *)animationGroupWithAnimations:(NSArray<CAAnimation *> *)animations delegate:(id)delegate duration:(NSTimeInterval)duration;
+
++ (CGFloat)preferredAnimationDuration;
+
++ (void)animateView:(UIView *)view appearOnScreen:(BOOL)appear completion:(void (^)(BOOL finished))completion;
 
 @end
 
 #define SYBasicEaseInOrOutAnimation(easeIn,keyPath,fValue,tValue) \
     [SYAnimationHelper basicAnimationWithKeyPath:keyPath timingFunctionName:easeIn?kCAMediaTimingFunctionEaseIn:kCAMediaTimingFunctionEaseOut fromValue:fValue toValue:tValue]
+
+#define SYBasicEaseInOrOutAnimationWithDuration(easeIn,keyPath,fValue,tValue,d) \
+    [SYAnimationHelper basicAnimationWithKeyPath:keyPath timingFunctionName:easeIn?kCAMediaTimingFunctionEaseIn:kCAMediaTimingFunctionEaseOut fromValue:fValue toValue:tValue delegate:nil duration:d]
 
 #define SYBasicEaseInAnimation(keyPath,fValue,tValue) \
     SYBasicEaseInOrOutAnimation(YES,keyPath,fValue,tValue)

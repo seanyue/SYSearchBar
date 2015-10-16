@@ -26,6 +26,8 @@ static const CGFloat kCancelButtonWidth = 30;
         _inputTextField = [[UITextField alloc] init];
         _inputTextField.font = searchButton.placeholderLabel.font;
         _inputTextField.placeholder = searchButton.placeholder;
+        _inputTextField.keyboardType = UIKeyboardTypeDefault;
+        _inputTextField.returnKeyType = UIReturnKeySearch;
         [self addSubview:_inputTextField];
         
         _cancelButton = [[UIButton alloc] init];
@@ -55,6 +57,11 @@ static const CGFloat kCancelButtonWidth = 30;
                                      0,
                                      kCancelButtonWidth,
                                      CGRectGetHeight(self.bounds));
+    _cancelButton.alpha = 0;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _cancelButton.alpha = 1;
+    }];
     
     _inputTextField.frame = CGRectMake([SYSearchButton placeholderLeftOffset], 0,
                                        CGRectGetMaxX(_cancelButton.frame)-[SYSearchButton placeholderLeftOffset]-kPadding,

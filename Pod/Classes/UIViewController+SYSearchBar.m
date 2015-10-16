@@ -8,6 +8,7 @@
 
 #import "UIViewController+SYSearchBar.h"
 #import "UIImage+SYSearchBarExtensions.h"
+#import "SYAnimationHelper.h"
 #import <objc/runtime.h>
 
 static void *kSearchButtonAssociatedKey = &kSearchButtonAssociatedKey;
@@ -27,40 +28,45 @@ static const CGFloat kSearchButtonSize = 49.;
 }
 
 - (void)syShowSearchController {
-    self.sySearchResultsViewController.view.frame = CGRectMake(self.view.bounds.origin.x,
-                                                               self.view.bounds.origin.y + 20,
-                                                               self.view.bounds.size.width,
-                                                               self.view.bounds.size.height - 20);
+    CGFloat topInsets = CGRectGetHeight(self.sySearchInputBar.frame);
+    CGRect targetFrame = CGRectMake(self.view.bounds.origin.x,
+                                    self.view.bounds.origin.y + topInsets,
+                                    self.view.bounds.size.width,
+                                    self.view.bounds.size.height - topInsets);
+    [self.view addSubview:self.sySearchResultsViewController.view];
     [self addChildViewController:self.sySearchResultsViewController];
     [self willMoveToParentViewController:nil];
-//    self.sySearchResultsViewController.view.frame = CGRectMake(0, 20, 100, 100);
     
-//    [self addChildViewController:self.sySearchResultsViewController];
-//    [self.view addSubview:self.sySearchResultsViewController.view];
-//    [self.sySearchResultsViewController.view willMoveToSuperview:self.view];
-
-   // [self presentViewController:self.sySearchResultsViewController animated:YES completion:nil];
-//    if (NSClassFromString(@"UISearchController")) {
-//        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:self.sySearchResultsViewController];
-//        searchController.searchBar.backgroundColor = [UIColor clearColor];
-//        searchController.searchBar.backgroundImage = [UIImage imageWithColor:[UIColor redColor]];
-//        searchController.searchBar.translucent = NO;
-//        searchController.searchBar.barTintColor = [UIColor whiteColor];
-//        searchController.active = YES;
-//        [self presentViewController:searchController animated:YES completion:nil];
-//    }
+    self.sySearchResultsViewController.view.frame = targetFrame;
+    [SYAnimationHelper animateView:self.sySearchResultsViewController.view
+                    appearOnScreen:YES
+                        completion:nil];
 }
 
 - (void)syBeginSearch {
     [self syShowSearchController];
 }
 
-- (void)sySearchButtonDidAnimateToTopbar {
+- (void)sySearchButtonWillAnimateToTopBar {
+    [self syShowSearchController];
+}
+
+- (void)sySearchButtonDidAnimateToTopBar {
     if (![self.view.subviews containsObject:self.sySearchInputBar]) {
         [self.view addSubview:self.sySearchInputBar];
     }
     
+    [self.sySearchInputBar setNeedsLayout];
     [self.sySearchInputBar.inputTextField becomeFirstResponder];
+}
+
+- (void)sySearchButtonWillAnimateToFloatingBar {
+    [SYAnimationHelper animateView:self.sySearchResultsViewController.view
+                    appearOnScreen:NO
+                        completion:^(BOOL finished) {
+        [self.sySearchResultsViewController.view removeFromSuperview];
+        [self.sySearchResultsViewController removeFromParentViewController];
+    }];
 }
 
 #pragma mark - Setters/Getters of Properties

@@ -85,9 +85,14 @@ static const CGFloat kPlaceholderLeftOffset = 10;
         [self layerSetExpanded:self.expanded];
     } else if (anim == [self.layer animationForKey:kBeginSearchAnimationKey]) {
         self.hidden = YES;
-        [self.delegate sySearchButtonDidAnimateToTopbar];
-    } else if (anim == [self.layer animationForKey:kEndSearchAnimationKey]) {
         
+        if ([self.delegate respondsToSelector:@selector(sySearchButtonDidAnimateToTopBar)]) {
+            [self.delegate sySearchButtonDidAnimateToTopBar];
+        }
+    } else if (anim == [self.layer animationForKey:kEndSearchAnimationKey]) {
+        if ([self.delegate respondsToSelector:@selector(sySearchButtonDidAnimateToFloatingBar)]) {
+            [self.delegate sySearchButtonDidAnimateToFloatingBar];
+        }
     }
     
     
@@ -97,18 +102,23 @@ static const CGFloat kPlaceholderLeftOffset = 10;
 
 - (void)animatedToExpanded:(BOOL)expanded {
     
+    static const NSTimeInterval kExpandAnimationDuration = 0.05;
+    
     CGRect targetSelfBounds = [self boundsForButtonExpanded:expanded];
     
     NSArray<CAAnimation *> *animations =
   @[
-    SYBasicEaseInOrOutAnimation(expanded,@"cornerRadius",nil,@([self cornerRadiusForButtonExpanded:expanded])),
-    SYBasicEaseInOrOutAnimation(expanded,@"bounds",nil, CGRectValue(targetSelfBounds))
+    SYBasicEaseInOrOutAnimationWithDuration(expanded,@"cornerRadius",nil,@([self cornerRadiusForButtonExpanded:expanded]),kExpandAnimationDuration),
+    SYBasicEaseInOrOutAnimationWithDuration(expanded,@"bounds",nil, CGRectValue(targetSelfBounds),kExpandAnimationDuration)
     ];
     
-    [self.layer addAnimation:[SYAnimationHelper animationGroupWithAnimations:animations delegate:self] forKey:kExpandAnimationGroupKey];
+    [self.layer addAnimation:[SYAnimationHelper animationGroupWithAnimations:animations delegate:self duration:kExpandAnimationDuration] forKey:kExpandAnimationGroupKey];
 }
 
 - (void)beginSearchAnimation {
+    if ([self.delegate respondsToSelector:@selector(sySearchButtonWillAnimateToTopBar)]) {
+        [self.delegate sySearchButtonWillAnimateToTopBar];
+    }
     
     self.automaticallyAdjustCornerRadius = NO;
     self.iconImageView.hidden = YES;
@@ -130,6 +140,10 @@ static const CGFloat kPlaceholderLeftOffset = 10;
 }
 
 - (void)endSearchAnimation {
+    if ([self.delegate respondsToSelector:@selector(sySearchButtonWillAnimateToFloatingBar)]) {
+        [self.delegate sySearchButtonWillAnimateToFloatingBar];
+    }
+    
     self.hidden = NO;
     self.iconImageView.hidden = NO;
     self.automaticallyAdjustCornerRadius = YES;
