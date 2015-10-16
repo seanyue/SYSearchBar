@@ -36,6 +36,13 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     objc_setAssociatedObject(self, kAutomaticallyAdjustCornerRadiusAssociatedKey, @(automaticallyAdjustCornerRadius), OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+- (CGFloat)topBarInsets {
+    if ([self.delegate respondsToSelector:@selector(sySearchButtonTopBarInsets)]) {
+        return [self.delegate sySearchButtonTopBarInsets];
+    }
+    return 0;
+}
+
 - (CGFloat)cornerRadiusForButtonExpanded:(BOOL)expanded {
     CGFloat minSize = MIN(self.bounds.size.width, self.bounds.size.height);
     if (expanded) {
@@ -125,7 +132,7 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     
     NSArray<CAAnimation *> *animations =
   @[
-    SYBasicEaseInAnimation(@"position", nil, CGPointXYValue(0, self.bounds.size.height/2)),
+    SYBasicEaseInAnimation(@"position", nil, CGPointXYValue(0, self.bounds.size.height/2+self.topBarInsets)),
     SYBasicEaseInAnimation(@"bounds", nil, CGRectXYWHValue(0, 0, self.superview.bounds.size.width, self.bounds.size.height)),
     SYBasicEaseInAnimation(@"cornerRadius", nil, @(0))
     ];
@@ -150,7 +157,7 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     
     NSArray<CAAnimation *> *animations =
   @[
-    SYBasicEaseOutAnimation(@"position", CGPointXYValue(0, self.bounds.size.height/2), CGPointValue(self.layer.position)),
+    SYBasicEaseOutAnimation(@"position", CGPointXYValue(0, self.bounds.size.height/2+self.topBarInsets), CGPointValue(self.layer.position)),
     SYBasicEaseOutAnimation(@"cornerRadius", @(0), @(self.layer.cornerRadius)),
     SYBasicEaseOutAnimation(@"bounds", CGRectXYWHValue(0, 0, self.superview.bounds.size.width, self.bounds.size.height), CGRectValue(self.layer.bounds))
     ];

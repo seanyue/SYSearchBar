@@ -13,6 +13,7 @@
 @protocol SYSearchButtonDelegate <NSObject>
 
 @optional
+- (CGFloat)sySearchButtonTopBarInsets;
 - (void)sySearchButtonWillAnimateToTopBar;
 - (void)sySearchButtonDidAnimateToTopBar;
 
