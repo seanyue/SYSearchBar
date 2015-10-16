@@ -1,6 +1,8 @@
 # SYSearchBar
 SYSearchBar is just an AirBnb-like search bar, which implemented its own UI logic instead of using the components of UIKit such as UISearchBar/UISearchController(iOS8+)/UISearchDisplayController(<iOS8).
 
+## UI Presentation
+![](./SYSearchBar.gif)
 ## Installation
 
 SYSearchBar is available through [CocoaPods](http://cocoapods.org). To install
