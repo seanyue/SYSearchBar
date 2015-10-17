@@ -13,7 +13,7 @@
 
 static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusableIdentifier";
 
-@interface SYViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface SYViewController () <UITableViewDelegate,UITableViewDataSource,SYSearchBarDelegate>
 {
     UITableView *_tableView;
 }
@@ -33,6 +33,7 @@ static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusabl
     [self.view addSubview:_tableView];
     
     [self syAddSearchBarInPosition:CGPointMake(20, 30) topInsetsOfInputBar:20];
+    self.sySearchBarDelegate = self;
     self.sySearchButton.placeholder = @"Search";
     self.sySearchResultsViewController = [[SYSearchResultsViewController alloc] init];
     self.sySearchButton.expanded = YES;

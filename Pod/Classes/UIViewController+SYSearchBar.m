@@ -16,6 +16,7 @@ static void *kInputBarTopInsetsViewAssociatedKey = &kInputBarTopInsetsViewAssoci
 static void *kSearchButtonAssociatedKey = &kSearchButtonAssociatedKey;
 static void *kSearchInputBarAssociatedKey = &kSearchInputBarAssociatedKey;
 static void *kSearchResultsViewControllerAssociatedKey = &kSearchResultsViewControllerAssociatedKey;
+static void *kSearchBarDelegateAssociatedKey = &kSearchBarDelegateAssociatedKey;
 
 static const CGFloat kSearchButtonSize = 49.;
 
@@ -167,8 +168,8 @@ static const CGFloat kSearchButtonSize = 49.;
     };
     
     searchInputBar.searchAction = ^BOOL(NSString *keywords) {
-        if ([weakSelf respondsToSelector:@selector(sySearchBarShouldSearchKeywords:)]) {
-            return [weakSelf sySearchBarShouldSearchKeywords:keywords];
+        if ([weakSelf.sySearchBarDelegate respondsToSelector:@selector(sySearchBarShouldSearchKeywords:)]) {
+            return [weakSelf.sySearchBarDelegate sySearchBarShouldSearchKeywords:keywords];
         }
         return NO;
     };
@@ -184,4 +185,11 @@ static const CGFloat kSearchButtonSize = 49.;
     objc_setAssociatedObject(self, kSearchResultsViewControllerAssociatedKey, sySearchResultsViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (void)setSySearchBarDelegate:(id<SYSearchBarDelegate>)sySearchBarDelegate {
+    objc_setAssociatedObject(self, kSearchBarDelegateAssociatedKey, sySearchBarDelegate, OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (id<SYSearchBarDelegate>)sySearchBarDelegate {
+    return objc_getAssociatedObject(self, kSearchBarDelegateAssociatedKey);
+}
 @end
