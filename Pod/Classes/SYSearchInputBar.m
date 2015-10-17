@@ -55,9 +55,12 @@ static const CGFloat kCancelButtonWidth = 30;
     
     const CGFloat kPadding = 10;
     
-    _cancelButton.frame = CGRectMake(CGRectGetMaxX(self.bounds)-kCancelButtonWidth-kPadding,
+    NSString *buttonTitle = [_cancelButton titleForState:UIControlStateNormal];
+    CGFloat titleTextWidth = [buttonTitle sizeWithAttributes:@{NSFontAttributeName:_cancelButton.titleLabel.font}].width;
+    titleTextWidth = titleTextWidth > kCancelButtonWidth ? titleTextWidth : kCancelButtonWidth;
+    _cancelButton.frame = CGRectMake(CGRectGetMaxX(self.bounds)-titleTextWidth-kPadding,
                                      0,
-                                     kCancelButtonWidth,
+                                     titleTextWidth,
                                      CGRectGetHeight(self.bounds));
     _cancelButton.alpha = 0;
     
