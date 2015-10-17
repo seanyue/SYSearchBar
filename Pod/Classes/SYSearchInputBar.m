@@ -33,7 +33,7 @@ static const CGFloat kCancelButtonWidth = 30;
         
         _cancelButton = [[UIButton alloc] init];
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-        [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor colorWithWhite:0.85 alpha:1] forState:UIControlStateHighlighted];
         [_cancelButton addTarget:self action:@selector(actionCancel) forControlEvents:UIControlEventTouchUpInside];
