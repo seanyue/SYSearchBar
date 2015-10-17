@@ -20,7 +20,6 @@ typedef BOOL (^SYSearchInputBarSearchAction)(NSString *keywords);
 @property (nonatomic,retain,readonly) UITextField *inputTextField;
 @property (nonatomic,retain,readonly) UIButton *cancelButton;
 
-@property (nonatomic,copy) SYSearchInputBarSearchAction searchAction;
 @property (nonatomic,copy) SYSearchInputBarCancelAction cancelAction;
 
 @end

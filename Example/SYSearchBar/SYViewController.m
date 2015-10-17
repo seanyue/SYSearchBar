@@ -13,7 +13,7 @@
 
 static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusableIdentifier";
 
-@interface SYViewController () <UITableViewDelegate,UITableViewDataSource,SYSearchBarDelegate>
+@interface SYViewController () <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UITableView *_tableView;
 }
@@ -33,7 +33,7 @@ static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusabl
     [self.view addSubview:_tableView];
     
     [self syAddSearchBarInPosition:CGPointMake(20, 30) topInsetsOfInputBar:20];
-    self.sySearchBarDelegate = self;
+    self.sySearchInputBar.inputTextField.delegate = self;
     self.sySearchButton.placeholder = @"Search";
     self.sySearchResultsViewController = [[SYSearchResultsViewController alloc] init];
     self.sySearchButton.expanded = YES;
@@ -45,10 +45,13 @@ static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusabl
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)sySearchBarShouldSearchKeywords:(NSString *)keywords {
-    NSLog(@"Search keywords:%@\n", keywords);
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSLog(@"Search keywords:%@\n", textField.text);
     return YES;
 }
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

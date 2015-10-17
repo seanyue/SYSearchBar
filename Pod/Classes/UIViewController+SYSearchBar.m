@@ -16,7 +16,10 @@ static void *kInputBarTopInsetsViewAssociatedKey = &kInputBarTopInsetsViewAssoci
 static void *kSearchButtonAssociatedKey = &kSearchButtonAssociatedKey;
 static void *kSearchInputBarAssociatedKey = &kSearchInputBarAssociatedKey;
 static void *kSearchResultsViewControllerAssociatedKey = &kSearchResultsViewControllerAssociatedKey;
-static void *kSearchBarDelegateAssociatedKey = &kSearchBarDelegateAssociatedKey;
+
+// KVO contexts
+static void *kSearchButtonPlaceholderTextChangeContext = &kSearchButtonPlaceholderTextChangeContext;
+static void *kSearchButtonPlaceholderFontChangeContext = &kSearchButtonPlaceholderFontChangeContext;
 
 static const CGFloat kSearchButtonSize = 49.;
 
@@ -146,6 +149,9 @@ static const CGFloat kSearchButtonSize = 49.;
     
     SYSearchButton *searchButton = [[SYSearchButton alloc] init];
     searchButton.delegate = self;
+    [searchButton addObserver:self forKeyPath:@"placeholderLabel.text" options:NSKeyValueObservingOptionNew context:kSearchButtonPlaceholderTextChangeContext];
+    [searchButton addObserver:self forKeyPath:@"placeholderLabel.font" options:NSKeyValueObservingOptionNew context:kSearchButtonPlaceholderFontChangeContext];
+    
     objc_setAssociatedObject(self, kSearchButtonAssociatedKey, searchButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     return searchButton;
@@ -166,14 +172,7 @@ static const CGFloat kSearchButtonSize = 49.;
         [weakSelf.sySearchInputBar removeFromSuperview];
         [weakSelf.sySearchButton animateToPreviousPosition];
     };
-    
-    searchInputBar.searchAction = ^BOOL(NSString *keywords) {
-        if ([weakSelf.sySearchBarDelegate respondsToSelector:@selector(sySearchBarShouldSearchKeywords:)]) {
-            return [weakSelf.sySearchBarDelegate sySearchBarShouldSearchKeywords:keywords];
-        }
-        return NO;
-    };
-    
+
     return searchInputBar;
 }
 
@@ -185,11 +184,11 @@ static const CGFloat kSearchButtonSize = 49.;
     objc_setAssociatedObject(self, kSearchResultsViewControllerAssociatedKey, sySearchResultsViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setSySearchBarDelegate:(id<SYSearchBarDelegate>)sySearchBarDelegate {
-    objc_setAssociatedObject(self, kSearchBarDelegateAssociatedKey, sySearchBarDelegate, OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (id<SYSearchBarDelegate>)sySearchBarDelegate {
-    return objc_getAssociatedObject(self, kSearchBarDelegateAssociatedKey);
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if (context == kSearchButtonPlaceholderTextChangeContext) {
+        self.sySearchInputBar.inputTextField.placeholder = change[@"new"];
+    } else if (context == kSearchButtonPlaceholderFontChangeContext) {
+        self.sySearchInputBar.inputTextField.font = change[@"new"];
+    }
 }
 @end
