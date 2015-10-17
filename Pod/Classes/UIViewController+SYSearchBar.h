@@ -10,7 +10,14 @@
 #import "SYSearchButton.h"
 #import "SYSearchInputBar.h"
 
-@interface UIViewController (SYSearchBar) <SYSearchButtonDelegate>
+@protocol SYSearchBarDelegate <NSObject>
+
+@optional
+- (BOOL)sySearchBarShouldSearchKeywords:(NSString *)keywords;
+
+@end
+
+@interface UIViewController (SYSearchBar) <SYSearchButtonDelegate,SYSearchBarDelegate>
 
 @property (nonatomic,readonly) CGFloat syInputBarTopInsets;
 

@@ -12,7 +12,7 @@
 
 static const CGFloat kCancelButtonWidth = 30;
 
-@interface SYSearchInputBar ()
+@interface SYSearchInputBar () <UITextFieldDelegate>
 
 @end
 
@@ -28,6 +28,8 @@ static const CGFloat kCancelButtonWidth = 30;
         _inputTextField.placeholder = searchButton.placeholder;
         _inputTextField.keyboardType = UIKeyboardTypeDefault;
         _inputTextField.returnKeyType = UIReturnKeySearch;
+        _inputTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _inputTextField.delegate = self;
         [self addSubview:_inputTextField];
         
         _cancelButton = [[UIButton alloc] init];
@@ -42,6 +44,7 @@ static const CGFloat kCancelButtonWidth = 30;
 }
 
 - (void)actionCancel {
+    self.inputTextField.text = nil;
     if (self.cancelAction) {
         __weak typeof(self) weakSelf = self;
         self.cancelAction(weakSelf);
@@ -64,9 +67,20 @@ static const CGFloat kCancelButtonWidth = 30;
     }];
     
     _inputTextField.frame = CGRectMake([SYSearchButton placeholderLeftOffset], 0,
-                                       CGRectGetMaxX(_cancelButton.frame)-[SYSearchButton placeholderLeftOffset]-kPadding,
+                                       CGRectGetMinX(_cancelButton.frame)-[SYSearchButton placeholderLeftOffset]-kPadding,
                                        CGRectGetHeight(self.bounds));
     
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if (self.searchAction && self.searchAction(textField.text)) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+    
+    return NO;
+}
 @end

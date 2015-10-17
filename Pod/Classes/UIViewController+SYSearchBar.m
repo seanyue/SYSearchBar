@@ -166,6 +166,13 @@ static const CGFloat kSearchButtonSize = 49.;
         [weakSelf.sySearchButton animateToPreviousPosition];
     };
     
+    searchInputBar.searchAction = ^BOOL(NSString *keywords) {
+        if ([weakSelf respondsToSelector:@selector(sySearchBarShouldSearchKeywords:)]) {
+            return [weakSelf sySearchBarShouldSearchKeywords:keywords];
+        }
+        return NO;
+    };
+    
     return searchInputBar;
 }
 

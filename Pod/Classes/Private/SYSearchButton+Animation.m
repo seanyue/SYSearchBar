@@ -19,7 +19,7 @@ static NSString *const kTextAnimationKey = @"TextAnimationKey";
 static void *kAutomaticallyAdjustCornerRadiusAssociatedKey = &kAutomaticallyAdjustCornerRadiusAssociatedKey;
 
 static void *kLayerForTapAnimationAssociatedKey = &kLayerForTapAnimationAssociatedKey;
-static const CGFloat kPlaceholderLeftOffset = 10;
+static const CGFloat kPlaceholderLeftOffset = 15;
 
 @interface SYSearchButton ()
 
@@ -83,6 +83,12 @@ static const CGFloat kPlaceholderLeftOffset = 10;
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if (anim == [self.iconImageView.layer animationForKey:kImageAnimationKey]) {
+        self.iconImageView.alpha = 1;
+        [self.iconImageView.layer removeAllAnimations];
+        return ;
+    }
+    
     if (anim == [self.placeholderLabel.layer animationForKey:kTextAnimationKey]) {
         [self.placeholderLabel.layer removeAllAnimations];
         return ;
@@ -128,7 +134,7 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     }
     
     self.automaticallyAdjustCornerRadius = NO;
-    self.iconImageView.hidden = YES;
+    self.iconImageView.alpha = 0;
     
     NSArray<CAAnimation *> *animations =
   @[
@@ -143,7 +149,6 @@ static const CGFloat kPlaceholderLeftOffset = 10;
                                                              CGPointXYValue(self.placeholderLabel.layer.position.x-CGRectGetMinX(self.placeholderLabel.frame)+kPlaceholderLeftOffset, self.placeholderLabel.layer.position.y));
     textAnimation.delegate = self;
     [self.placeholderLabel.layer addAnimation:textAnimation forKey:kTextAnimationKey];
-
 }
 
 - (void)endSearchAnimation {
@@ -152,7 +157,6 @@ static const CGFloat kPlaceholderLeftOffset = 10;
     }
     
     self.hidden = NO;
-    self.iconImageView.hidden = NO;
     self.automaticallyAdjustCornerRadius = YES;
     
     NSArray<CAAnimation *> *animations =
@@ -168,6 +172,10 @@ static const CGFloat kPlaceholderLeftOffset = 10;
                                                               CGPointValue(self.placeholderLabel.layer.position));
     textAnimation.delegate = self;
     [self.placeholderLabel.layer addAnimation:textAnimation forKey:kTextAnimationKey];
+    
+    CABasicAnimation *imageAnimation = SYBasicEaseOutAnimation(@"opacity", @(0), @(1));
+    imageAnimation.delegate = self;
+    [self.iconImageView.layer addAnimation:imageAnimation forKey:kImageAnimationKey];
 }
 
 + (CGFloat)placeholderLeftOffset {

@@ -11,6 +11,7 @@
 @class SYSearchButton;
 
 typedef void (^SYSearchInputBarCancelAction)(id sender);
+typedef BOOL (^SYSearchInputBarSearchAction)(NSString *keywords);
 
 @interface SYSearchInputBar : UIView
 
@@ -18,6 +19,8 @@ typedef void (^SYSearchInputBarCancelAction)(id sender);
 
 @property (nonatomic,retain,readonly) UITextField *inputTextField;
 @property (nonatomic,retain,readonly) UIButton *cancelButton;
+
+@property (nonatomic,copy) SYSearchInputBarSearchAction searchAction;
 @property (nonatomic,copy) SYSearchInputBarCancelAction cancelAction;
 
 @end

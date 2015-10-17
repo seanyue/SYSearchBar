@@ -44,6 +44,10 @@ static NSString *const kTableViewCellReusableIdentifier = @"TableViewCellReusabl
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)sySearchBarShouldSearchKeywords:(NSString *)keywords {
+    NSLog(@"Search keywords:%@\n", keywords);
+    return YES;
+}
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
