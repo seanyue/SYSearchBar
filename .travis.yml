@@ -1,0 +1,3 @@
+language: objective-c
+xcode_project: _Pods.xcodeproj
+xcode_scheme: SYSearchBar
