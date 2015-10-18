@@ -1,5 +1,8 @@
 # SYSearchBar
-
+[![CI Status](http://img.shields.io/travis/seanyue/SYSearchBar.svg?style=flat)](https://travis-ci.org/seanyue/SYSearchBar)
+[![Version](https://img.shields.io/cocoapods/v/SYSearchBar.svg?style=flat)](http://cocoapods.org/pods/SYSearchBar)
+[![License](https://img.shields.io/cocoapods/l/SYSearchBar.svg?style=flat)](http://cocoapods.org/pods/SYSearchBar)
+[![Platform](https://img.shields.io/cocoapods/p/SYSearchBar.svg?style=flat)](http://cocoapods.org/pods/SYSearchBar)
 ## Overview
 SYSearchBar is just an AirBnb-like search bar, which implements its own UI logic instead of using the components of `UIKit` such as `UISearchBar`/`UISearchController`(iOS8+)/`UISearchDisplayController`(<iOS8).
 
@@ -69,11 +72,11 @@ The input bar's placeholder always keeps the same with the search button's.
 
 ## Installation
 
-SYSearchBar is NOT available through public/private repository of cocoapods (it will be public later). However, to install
-it, add the following line to your Podfile:
+SYSearchBar is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SYSearchBar', :git => 'https://github.com/seanyue/SYSearchBar.git'
+pod 'SYSearchBar'
 ```
 
 ## Author
