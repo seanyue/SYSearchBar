@@ -9,15 +9,14 @@
 Pod::Spec.new do |s|
   s.name             = "SYSearchBar"
   s.version          = "0.1.0"
-  s.summary          = "A short description of SYSearchBar."
-  s.description      = "SYSearchBar description"
+  s.summary          = "SSYSearchBar is just an AirBnb-like search bar."
+  s.description      = "SSYSearchBar is just an AirBnb-like search bar, which implements its own UI logic instead of using the components of UIKit such as UISearchBar/UISearchController(iOS8+)/UISearchDisplayController(<iOS8)."
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/SYSearchBar"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://github.com/seanyue/SYSearchBar"
   s.license          = 'MIT'
-  s.author           = { "Yu Xulu" => "tonyfish@qq.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/SYSearchBar.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { "Yu Xulu(Sean Yue)" => "tonyfish@qq.com" }
+  s.source           = { :git => "https://github.com/seanyue/SYSearchBar.git", :tag => s.version.to_s }
+  s.social_media_url = 'http://weibo.com/sean2you'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
