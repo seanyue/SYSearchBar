@@ -107,9 +107,11 @@ static const CGFloat kSearchButtonSize = 49.;
     
     [SYAnimationHelper animateView:self.sySearchResultsViewController.view
                     appearOnScreen:NO
-                        completion:^(BOOL finished) {
-        [self.sySearchResultsViewController.view removeFromSuperview];
+                        completion:^(BOOL finished)
+    {
+        [self.sySearchResultsViewController willMoveToParentViewController:nil];
         [self.sySearchResultsViewController removeFromParentViewController];
+        [self.sySearchResultsViewController.view removeFromSuperview];
     }];
 }
 
