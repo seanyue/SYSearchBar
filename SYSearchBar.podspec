@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "SYSearchBar"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "SSYSearchBar is just an AirBnb-like search bar."
   s.description      = "SSYSearchBar is just an AirBnb-like search bar, which implements its own UI logic instead of using the components of UIKit such as UISearchBar/UISearchController(iOS8+)/UISearchDisplayController(<iOS8)."
 

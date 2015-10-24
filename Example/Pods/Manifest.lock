@@ -3,13 +3,13 @@ PODS:
   - Expecta+Snapshots (2.0.0):
     - Expecta (~> 1.0)
     - FBSnapshotTestCase/Core (~> 2.0.3)
-  - FBSnapshotTestCase (2.0.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.0.4)
-  - FBSnapshotTestCase/Core (2.0.4)
-  - FBSnapshotTestCase/SwiftSupport (2.0.4):
+  - FBSnapshotTestCase (2.0.5):
+    - FBSnapshotTestCase/SwiftSupport (= 2.0.5)
+  - FBSnapshotTestCase/Core (2.0.5)
+  - FBSnapshotTestCase/SwiftSupport (2.0.5):
     - FBSnapshotTestCase/Core
-  - Specta (1.0.3)
-  - SYSearchBar (0.1.0)
+  - Specta (1.0.4)
+  - SYSearchBar (0.1.1)
 
 DEPENDENCIES:
   - Expecta
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Expecta: 9d1bff6c8b0eeee73a166a2ee898892478927a15
   Expecta+Snapshots: 29b38dd695bc72a0ed2bea833937d78df41943ba
-  FBSnapshotTestCase: d94cf34841c9e77390e29009e8e2713479d48753
-  Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
-  SYSearchBar: 654a96ad495143b098478867b47da039e6e6395e
+  FBSnapshotTestCase: 6917deb01d0556dd544536f9eb34e0cf26f904d5
+  Specta: 69bb134672aae190a1379ff91df07dad8dd1f869
+  SYSearchBar: 76f7345f1945feb4d41444ef9e53bfe1120c8e44
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

@@ -1,17 +1,18 @@
 {
   "name": "SYSearchBar",
-  "version": "0.1.0",
-  "summary": "A short description of SYSearchBar.",
-  "description": "SYSearchBar description",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/SYSearchBar",
+  "version": "0.1.1",
+  "summary": "SSYSearchBar is just an AirBnb-like search bar.",
+  "description": "SSYSearchBar is just an AirBnb-like search bar, which implements its own UI logic instead of using the components of UIKit such as UISearchBar/UISearchController(iOS8+)/UISearchDisplayController(<iOS8).",
+  "homepage": "https://github.com/seanyue/SYSearchBar",
   "license": "MIT",
   "authors": {
-    "Yu Xulu": "tonyfish@qq.com"
+    "Yu Xulu(Sean Yue)": "tonyfish@qq.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/SYSearchBar.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/seanyue/SYSearchBar.git",
+    "tag": "0.1.1"
   },
+  "social_media_url": "http://weibo.com/sean2you",
   "platforms": {
     "ios": "7.0"
   },
