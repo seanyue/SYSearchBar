@@ -48,9 +48,9 @@ static const CGFloat kSearchButtonSize = 49.;
                                     self.view.bounds.origin.y + topInsets,
                                     self.view.bounds.size.width,
                                     self.view.bounds.size.height - topInsets);
-    [self.view addSubview:self.sySearchResultsViewController.view];
     [self addChildViewController:self.sySearchResultsViewController];
-    [self willMoveToParentViewController:nil];
+    [self.view addSubview:self.sySearchResultsViewController.view];
+    [self.sySearchResultsViewController didMoveToParentViewController:self];
     
     self.sySearchResultsViewController.view.frame = targetFrame;
     [SYAnimationHelper animateView:self.sySearchResultsViewController.view
